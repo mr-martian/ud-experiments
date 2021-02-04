@@ -1,0 +1,1 @@
+^the<det><def><sp>/the<det><def><sp>$ ^green<adj>/green<adj>$ ^cat<n><sg>/cat<n><sg>$ ^'s<gen>/'s<gen>$ ^sock<n><pl>/sock<n><pl>$

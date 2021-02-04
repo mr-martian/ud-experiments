@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transfer>
+  <section-def-cats>
+    <def-cat n="noun">
+      <cat-item tags="n.*"/>
+    </def-cat>
+    <def-cat n="noun_case">
+      <cat-item tags="n.*.@@case"/>
+      <cat-item tags="n.*.@@case.*"/>
+    </def-cat>
+    <def-cat n="prep">
+      <cat-item tags="pr"/>
+      <cat-item tags="pr.*"/>
+    </def-cat>
+    <def-cat n="adj">
+      <cat-item tags="adj"/>
+      <cat-item tags="adj.*"/>
+    </def-cat>
+    <def-cat n="det">
+      <cat-item tags="det.*"/>
+    </def-cat>
+    <def-cat n="gen">
+      <cat-item tags="gen"/>
+    </def-cat>
+  </section-def-cats>
+  <section-def-attrs>
+    <def-attr n="a_nbr">
+      <attr-item tags="ND"/>
+      <attr-item tags="sg"/>
+      <attr-item tags="pl"/>
+      <attr-item tags="sp"/>
+    </def-attr>
+  </section-def-attrs>
+
+  <section-def-macros>
+    <def-macro n="non_possessed" npar="1">
+      <choose>
+	  <when>
+	    <test>
+	      <contains-substring><clip pos="1" side="tl" part="tags"/><lit-tag v="@@nmod"/></contains-substring>
+	    </test>
+	    <reject-current-rule/>
+	  </when>
+      </choose>
+    </def-macro>
+    <def-macro n="non_cased" npar="1">
+      <choose>
+	  <when>
+	    <test>
+	      <contains-substring><clip pos="1" side="tl" part="tags"/><lit-tag v="@@case"/></contains-substring>
+	    </test>
+	    <reject-current-rule/>
+	  </when>
+      </choose>
+    </def-macro>
+  </section-def-macros>
+  
+  <section-rules>
+    
+    <rule firstChunk="n">
+      <pattern>
+	<pattern-item n="noun"/>
+	<pattern-item n="gen"/>
+      </pattern>
+      <action>
+	<call-macro n="non_cased">
+	  <with-param pos="1"/>
+	</call-macro>
+	<out>
+	  <chunk>
+	    <target>
+	      <clip pos="1" side="tl" part="whole"/>
+	      <lit-tag v="@@case"/>
+	    </target>
+	    <contents>
+	      <lu>
+		<clip pos="1" side="tl" part="whole"/>
+	      </lu>
+	      <b/>
+	      <lu>
+		<clip pos="2" side="tl" part="whole"/>
+		<lit-tag v="@case"/>
+	      </lu>
+	    </contents>
+	  </chunk>
+	</out>
+      </action>
+    </rule>
+
+    <rule firstChunk="n">
+      <pattern>
+	<pattern-item n="adj"/>
+	<pattern-item n="noun"/>
+      </pattern>
+      <action>
+	<call-macro n="non_possessed">
+	  <with-param pos="2"/>
+	</call-macro>
+	<out>
+	  <chunk>
+	    <target>
+	      <clip pos="2" side="tl" part="whole"/>
+	      <lit-tag v="@@amod"/>
+	    </target>
+	    <contents>
+	      <lu>
+		<clip pos="1" side="tl" part="whole"/>
+		<lit-tag v="@amod"/>
+	      </lu>
+	      <b/>
+	      <lu>
+		<clip pos="2" side="tl" part="whole"/>
+	      </lu>
+	    </contents>
+	  </chunk>
+	</out>
+      </action>
+    </rule>
+
+    <rule firstChunk="n">
+      <pattern>
+	<pattern-item n="noun_case"/>
+	<pattern-item n="noun"/>
+      </pattern>
+      <action>
+	<call-macro n="non_cased">
+	  <with-param pos="2"/>
+	</call-macro>
+	<call-macro n="non_possessed">
+	  <with-param pos="2"/>
+	</call-macro>
+	<out>
+	  <chunk>
+	    <target>
+	      <clip pos="2" side="tl" part="whole"/>
+	      <lit-tag v="@@nmod"/>
+	    </target>
+	    <contents>
+	      <lu>
+		<clip pos="1" side="tl" part="whole"/>
+		<lit-tag v="@nmod"/>
+	      </lu>
+	      <b/>
+	      <lu>
+		<clip pos="2" side="tl" part="whole"/>
+	      </lu>
+	    </contents>
+	  </chunk>
+	</out>
+      </action>
+    </rule>
+
+    <rule firstChunk="n">
+      <pattern>
+	<pattern-item n="det"/>
+	<pattern-item n="noun"/>
+      </pattern>
+      <action>
+	<call-macro n="non_cased">
+	  <with-param pos="2"/>
+	</call-macro>
+	<call-macro n="non_possessed">
+	  <with-param pos="2"/>
+	</call-macro>
+	<out>
+	  <chunk>
+	    <target>
+	      <clip pos="2" side="tl" part="whole"/>
+	      <lit-tag v="@@det"/>
+	    </target>
+	    <contents>
+	      <lu>
+		<clip pos="1" side="tl" part="whole"/>
+		<lit-tag v="@det"/>
+	      </lu>
+	      <b/>
+	      <lu>
+		<clip pos="2" side="tl" part="whole"/>
+	      </lu>
+	    </contents>
+	  </chunk>
+	</out>
+      </action>
+    </rule>
+    
+  </section-rules>
+</transfer>
