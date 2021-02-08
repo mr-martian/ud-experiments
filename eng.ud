@@ -1,0 +1,4 @@
+n.!@@case gen : 1 > 2 @case
+adj n.!@@case : 1 < 2 @amod
+n.@@case n.!@@case.!@@nmod : 1 < 2 @nmod
+det n.!@@case.!@@nmod : 1 < 2 @det
